@@ -31,8 +31,9 @@ class App extends Component {
 	}
 
 	componentWillMount(){
-		axios.get('http://localhost:8000/labels/user/' + this.state.username).then(
+		axios.get('http://34.217.32.176:8000/labels/user/' + this.state.username).then(
 			res => {
+				console.log("success");
 				const labels = res.data;
 
 				var label_ids = {}
@@ -41,7 +42,7 @@ class App extends Component {
 				})
 				label_ids["5a8baca35a4aa45e7a3c5d08"] = {name: '', color: ''}
 
-				axios.get('http://localhost:8000/tasks/user/' + this.state.username).then( res => {
+				axios.get('http://34.217.32.176:8000/tasks/user/' + this.state.username).then( res => {
 					const tasks = res.data;
 					const dayToTasks = this.remapDayToTasks(tasks);
 					this.setState({ tasks : tasks, dayToTasks: dayToTasks, labels: labels, label_ids: label_ids})
