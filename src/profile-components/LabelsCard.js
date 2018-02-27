@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './stylesheets/LabelsCard.css';
-import axios from 'axios';
 import LabelItem from './LabelItem';
 import AddLabel from './AddLabel';
 import AddingLabel from './AddingLabel';

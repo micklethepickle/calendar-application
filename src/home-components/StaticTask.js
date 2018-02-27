@@ -32,7 +32,7 @@ class StaticTask extends Component{
 			act_mins: this.props.task.estimated_time % 60,
 			cur_time: new Date().toString()
 		}
-		axios.put('http://localhost:8000/tasks/complete/'+ id, body).then( response => {
+		axios.put('http://34.217.32.176:8000/tasks/complete/'+ id, body).then( response => {
 	  			this.props.updateTasks();
 	  		})
 	  		.catch( error =>{
@@ -61,7 +61,7 @@ class StaticTask extends Component{
 			act_mins: minutes,
 			cur_time: new Date().toString()
 		}
-		axios.put('http://localhost:8000/tasks/complete/'+ id, body).then( response => {
+		axios.put('http://34.217.32.176:8000/tasks/complete/'+ id, body).then( response => {
 	  			this.props.updateTasks();
 	  		})
 	  		.catch( error =>{
@@ -76,7 +76,7 @@ class StaticTask extends Component{
 			username: this.props.username
 		}
 
-		axios.delete('http://localhost:8000/tasks/' + id, {data: body}).then( response =>{
+		axios.delete('http://34.217.32.176:8000/tasks/' + id, {data: body}).then( response =>{
 			this.props.updateTasks();
 		})
 		.catch(error =>{

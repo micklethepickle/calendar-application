@@ -33,7 +33,7 @@ class AddingLabel extends Component{
 			color: this.state.curColor
 		}
 
-		axios.post('http://localhost:8000/labels', newLabel).then( response => {
+		axios.post('http://34.217.32.176:8000/labels', newLabel).then( response => {
 	  			this.props.updateLabels();
 	  			this.props.handleConfirm();
 	  		})

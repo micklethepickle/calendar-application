@@ -3,7 +3,6 @@ import "./stylesheets/Calendar.css";
 import Week from './Week';
 import Month from './Month';
 import ZoomedDay from './ZoomedDay';
-import axios from 'axios';
 
 import Center from 'react-center';
 

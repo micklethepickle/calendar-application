@@ -74,7 +74,7 @@ class AddTask extends Component{
 	  			due_date: this.props.date.toString()
 	  		};
 
-	  		axios.post('http://localhost:8000/tasks', new_task).then( response => {
+	  		axios.post('http://34.217.32.176:8000/tasks', new_task).then( response => {
 	  			this.props.updateTasks();
 	  		})
 	  		.catch( error =>{

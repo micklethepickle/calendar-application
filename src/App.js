@@ -56,7 +56,7 @@ class App extends Component {
 
 	updateTasks(){
 
-		axios.get('http://localhost:8000/tasks/user/' + this.state.username).then( res => {
+		axios.get('http://34.217.32.176:8000/tasks/user/' + this.state.username).then( res => {
 			const tasks = res.data;
 			const dayToTasks = this.remapDayToTasks(tasks);
 			this.setState({ tasks : tasks, dayToTasks: dayToTasks})
@@ -67,7 +67,7 @@ class App extends Component {
 	}
 
 	updateLabels(){
-		axios.get('http://localhost:8000/labels/user/' + this.state.username).then(
+		axios.get('http://34.217.32.176:8000/labels/user/' + this.state.username).then(
 			res => {
 				const labels = res.data;
 

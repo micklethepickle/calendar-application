@@ -98,7 +98,7 @@ class EditTask extends Component{
 	  			due_date: this.state.due_date
 	  		};
 
-	  		axios.put('http://localhost:8000/tasks/'+ id, new_task).then( response => {
+	  		axios.put('http://34.217.32.176:8000/tasks/'+ id, new_task).then( response => {
 	  			this.props.updateTasks();
 	  		})
 	  		.catch( error =>{
