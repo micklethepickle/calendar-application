@@ -1,0 +1,10 @@
+.ZoomedDay{
+	position: fixed;
+	margin:auto;
+	height: 45em;
+	width: 45em;
+	left: 0;
+	padding: 2.5em;
+	right: 0;
+	background-color: #f4f8ff;
+}

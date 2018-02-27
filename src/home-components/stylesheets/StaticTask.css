@@ -1,0 +1,54 @@
+.StaticTask{
+	width: 18em;
+}
+
+
+.buttonCell{
+	padding:0;
+	margin:0;
+	height: 100%;
+}
+
+.quickComplete{
+	padding: 0;
+	margin:0;
+	background-color: green;
+	width: 3.5em;
+	height:100%;
+}
+
+.complete{
+	padding: 0;
+	margin: 0;
+	background-color: yellow;
+	width:3.5em;
+	height:100%;
+}
+
+.delete{
+	padding: 0;
+	margin: 0;
+	background-color: red;
+	width: 3.5em;
+	height: 100%;
+}
+
+.dueDate{
+	font-style: italic;
+	font-size: 0.75em;
+}
+
+.completeForm{
+	width: 9em;
+}
+
+.sTaskInput{
+	width:2em;
+	font-size: 1em;
+}
+
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}

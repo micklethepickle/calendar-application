@@ -1,0 +1,140 @@
+import React, { Component } from 'react';
+import './stylesheets/StaticTask.css';
+import axios from 'axios';
+
+class StaticTask extends Component{
+	constructor(props){
+		super(props);
+
+		this.state = {isCompleting : false, hours: null, minutes: null}
+
+		this.handleHourChange = this.handleHourChange.bind(this);
+		this.handleMinChange = this.handleMinChange.bind(this);
+
+		this.quickComplete = this.quickComplete.bind(this);
+		this.complete = this.complete.bind(this);
+		this.handleComplete = this.handleComplete.bind(this);
+		this.delete = this.delete.bind(this);
+	}
+
+	handleHourChange(e){
+		this.setState({hours: e.target.value})
+	}
+
+	handleMinChange(e){
+		this.setState({minutes: e.target.value})
+	}
+
+	quickComplete(){
+		const id = this.props.task._id;
+		const body = {
+			act_hours: Math.floor(this.props.task.estimated_time /60),
+			act_mins: this.props.task.estimated_time % 60,
+			cur_time: new Date().toString()
+		}
+		axios.put('http://localhost:8000/tasks/complete/'+ id, body).then( response => {
+	  			this.props.updateTasks();
+	  		})
+	  		.catch( error =>{
+	  			console.log(error)
+	  		})
+	  	this.setState({isCompleting: false})
+	}
+
+	complete(){
+		this.setState({isCompleting: true})
+
+	}
+
+	handleComplete(){
+		const id = this.props.task._id;
+
+		var hours = this.state.hours;
+		var minutes = this.state.minutes;
+
+		if(this.state.hours == null && this.state.minutes == null){
+			hours = Math.floor(this.props.task.estimated_time /60);
+			minutes = this.props.task.estimated_time % 60;
+		}
+		const body = {
+			act_hours: hours,
+			act_mins: minutes,
+			cur_time: new Date().toString()
+		}
+		axios.put('http://localhost:8000/tasks/complete/'+ id, body).then( response => {
+	  			this.props.updateTasks();
+	  		})
+	  		.catch( error =>{
+	  			console.log(error)
+	  		})
+	}
+
+	delete(){
+		const id = this.props.task._id;
+
+		const body= {
+			username: this.props.username
+		}
+
+		axios.delete('http://localhost:8000/tasks/' + id, {data: body}).then( response =>{
+			this.props.updateTasks();
+		})
+		.catch(error =>{
+			console.log(error)
+		})
+	}
+
+	render(){
+		const title = this.props.task.title;
+		const description = this.props.task.description;
+		const label = this.props.label;
+
+		var due_date = null;
+		if (this.props.showDate == true){
+			const d_date = new Date(this.props.task.due_date)
+			const dateString = d_date.getFullYear() + '/' + d_date.getMonth() + '/' + d_date.getDate();
+			due_date = <div className="dueDate">{dateString} </div>
+		} 
+
+		const quickCompleteBtn = this.state.isCompleting ? null : <td className="buttonCell"><button className="quickComplete" onClick={this.quickComplete} /></td>;
+		const completeBtn = this.state.isCompleting ? null :  <td className="buttonCell"><button className="complete" onClick={this.complete} /></td>;
+		const deleteBtn = this.state.isCompleting ? null :  <td className="buttonCell"><button className="delete" onClick={this.delete} /></td>;
+
+		const completeForm = this.state.isCompleting? 
+			(
+			<td>
+			<form style={{width: "6.5em"}}>
+				<input className="sTaskInput" type="number" placeholder="h" value={this.state.hours} onChange={this.handleHourChange}/>
+				:<input className="sTaskInput" type="number" placeholder="min" value={this.state.minutes} onChange={this.handleMinChange}/>
+				<input className="completeConfirmBtn" type="button" onClick={this.handleComplete}/>
+			</form>
+			</td>) : null;
+		return(
+			<table className="StaticTask">
+				<tr>
+				<td className="taskInfo">
+					<div className="taskInfo" style={{backgroundColor: label.color}} onClick={this.props.onClick}>
+						<div className="title">
+							{title}
+						</div>
+						<div className="desc">
+							{description}
+						</div>
+						<div className="timeLeft">
+							{this.props.task.estimated_time} minutes
+						</div>
+						{due_date}
+					</div>
+				</td>
+				{quickCompleteBtn}
+				{completeBtn}
+				{deleteBtn}
+				
+				{completeForm}
+				</tr>
+			</table>
+		)
+	}
+}
+
+export default StaticTask;

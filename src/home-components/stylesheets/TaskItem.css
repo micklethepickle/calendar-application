@@ -1,0 +1,24 @@
+.TaskItem{
+}
+
+.taskInfo{
+	float: left;
+	display: block;
+	width: 15em;
+	padding: 0.1em;
+}
+
+.title{
+	font-size: 1.25em;
+	font-style: bold;
+}
+
+.desc{
+	font-size: 0.75em;
+	font-style: italic;
+}
+
+
+.timeLeft{
+	font-size: 0.75em;
+}

@@ -1,0 +1,11 @@
+.Day{
+	background-color: white;
+	height: 8em;
+	border-width: 0.1em;
+	border-style: solid;
+	border-color: black;
+}
+
+.task{
+	font-size: 0.7em;
+}

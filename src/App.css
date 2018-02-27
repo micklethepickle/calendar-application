@@ -1,0 +1,11 @@
+.App {
+}
+
+.calendarCell{
+	width: 75em;
+}
+
+.boardCell{
+	padding-top:5em;
+	width: 27em;
+}
