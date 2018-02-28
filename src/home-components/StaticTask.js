@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './stylesheets/StaticTask.css';
 import axios from 'axios';
+import { Button, ButtonGroup} from 'react-bootstrap';
 
 class StaticTask extends Component{
 	constructor(props){
@@ -15,6 +16,7 @@ class StaticTask extends Component{
 		this.complete = this.complete.bind(this);
 		this.handleComplete = this.handleComplete.bind(this);
 		this.delete = this.delete.bind(this);
+		this.handleCancel = this.handleCancel.bind(this);
 	}
 
 	handleHourChange(e){
@@ -44,6 +46,10 @@ class StaticTask extends Component{
 	complete(){
 		this.setState({isCompleting: true})
 
+	}
+
+	handleCancel(){
+		this.setState({isCompleting: false})
 	}
 
 	handleComplete(){
@@ -106,7 +112,10 @@ class StaticTask extends Component{
 			<form style={{width: "6.5em"}}>
 				<input className="sTaskInput" type="number" placeholder="h" value={this.state.hours} onChange={this.handleHourChange}/>
 				:<input className="sTaskInput" type="number" placeholder="min" value={this.state.minutes} onChange={this.handleMinChange}/>
-				<input className="completeConfirmBtn" type="button" onClick={this.handleComplete}/>
+				<ButtonGroup>
+					<Button className="completing-btns" bsStyle="success" onClick={this.handleComplete}/>
+					<Button className="completing-btns" bsStyle="danger" onClick={this.handleCancel} />
+				</ButtonGroup>
 			</form>
 			</td>) : null;
 		return(
