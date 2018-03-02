@@ -12,6 +12,7 @@ class Week extends Component{
 		const listDays = days.map((d) =>{
 			const day = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
 			const tasks = this.props.dayToTasks[day];
+			const workTime = this.props.dayToWork[day];
 			return(
 				<li>
 					<Day 
@@ -20,6 +21,7 @@ class Week extends Component{
 						dayClicker={this.props.dayClicker} 
 						username={this.props.username}
 						tasks={tasks}
+						workTime={workTime}
 						label_ids={this.props.label_ids}/>
 				</li>
 			)

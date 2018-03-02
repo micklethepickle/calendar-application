@@ -132,6 +132,7 @@ class Calendar extends Component{
 					dayClicker={this.handleDayClick} 
 					username={this.props.username}
 					dayToTasks={this.props.dayToTasks}
+					dayToWork={this.props.dayToWork}
 					label_ids={this.props.label_ids}/>
 				</Center>
 			</div>

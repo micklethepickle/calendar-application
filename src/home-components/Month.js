@@ -21,6 +21,7 @@ class Month extends Component{
 				dayClicker={this.props.dayClicker} 
 				username={this.props.username} 
 				dayToTasks={this.props.dayToTasks}
+				dayToWork={this.props.dayToWork}
 				label_ids={this.props.label_ids}/>
 		);
 

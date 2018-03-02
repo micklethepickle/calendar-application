@@ -22,6 +22,7 @@ class App extends Component {
 			showNav: false,
 			tasks: [], 
 			dayToTasks: {},
+			dayToWork: {},
 			labels: [],
 			loginPage: false
 		}
@@ -38,7 +39,6 @@ class App extends Component {
 		axios({url:'http://34.217.32.176:8000/users/login', method: 'post', withCredentials: true}).then(
 			res =>{
 				const username = res.data;
-				console.log(username);
 				axios.get('http://34.217.32.176:8000/labels/user/' + username).then(
 				res => {
 					var labels = res.data;
@@ -50,9 +50,10 @@ class App extends Component {
 					label_ids["5a8baca35a4aa45e7a3c5d08"] = {name: '', color: ''}
 
 					axios.get('http://34.217.32.176:8000/tasks/user/' + username).then( res => {
-						const tasks = res.data;
+						const tasks = res.data.tasks;
+						const dayToWork = res.data.dayToWork;
 						const dayToTasks = this.remapDayToTasks(tasks);
-						this.setState({ username: username, tasks : tasks, dayToTasks: dayToTasks, labels: labels, label_ids: label_ids, loginPage: false})
+						this.setState({ username: username, tasks : tasks, dayToTasks: dayToTasks, labels: labels, label_ids: label_ids, loginPage: false, dayToWork : dayToWork})
 				})
 			})
 		})
@@ -66,9 +67,10 @@ class App extends Component {
 	updateTasks(){
 
 		axios.get('http://34.217.32.176:8000/tasks/user/' + this.state.username).then( res => {
-			const tasks = res.data;
+			const tasks = res.data.tasks;
 			const dayToTasks = this.remapDayToTasks(tasks);
-			this.setState({ tasks : tasks, dayToTasks: dayToTasks})
+			const dayToWork = res.data.dayToWork;
+			this.setState({ tasks : tasks, dayToTasks: dayToTasks, dayToWork : dayToWork})
 		})
 		.catch((error =>{
 			console.log('error 3 ' + error);
@@ -118,6 +120,8 @@ class App extends Component {
 
 	updateUsername(username){
 		this.setState({username: username, loginPage: false});
+		this.updateTasks();
+		this.updateLabels();
 	}
 
   	render() {
@@ -125,7 +129,7 @@ class App extends Component {
   		const profileItem = <NavLink to='/profile'>Profile</NavLink>;
   		const statsItem = <NavLink to='/stats'>Stats</NavLink>;
 
-  		console.log(this.state.loginPage);
+  		console.log(this.state.dayToWork);
 	    return (
 	    	<HashRouter>
 		      	<div className="App">
@@ -146,6 +150,7 @@ class App extends Component {
 		      				<Home {...props} 
 		      					tasks={this.state.tasks} 
 		      					dayToTasks={this.state.dayToTasks}
+		      					dayToWork={this.state.dayToWork}
 		      					labels={this.state.labels}
 		      					label_ids={this.state.label_ids}
 		      					username={this.state.username}
