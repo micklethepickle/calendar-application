@@ -102,26 +102,23 @@ class StaticTask extends Component{
 			due_date = <div className="dueDate">{dateString} </div>
 		} 
 
-		const quickCompleteBtn = this.state.isCompleting ? null : <td className="buttonCell"><button className="quickComplete" onClick={this.quickComplete} /></td>;
-		const completeBtn = this.state.isCompleting ? null :  <td className="buttonCell"><button className="complete" onClick={this.complete} /></td>;
-		const deleteBtn = this.state.isCompleting ? null :  <td className="buttonCell"><button className="delete" onClick={this.delete} /></td>;
+		const quickCompleteBtn = this.state.isCompleting ? null : <div className="buttonCell"><button className="quickComplete" onClick={this.quickComplete} /></div>;
+		const completeBtn = this.state.isCompleting ? null :  <div className="buttonCell"><button className="complete" onClick={this.complete} /></div>;
+		const deleteBtn = this.state.isCompleting ? null :  <div className="buttonCell"><button className="delete" onClick={this.delete} /></div>;
 
 		const completeForm = this.state.isCompleting? 
 			(
-			<td>
-			<form style={{width: "6.5em"}}>
+			<form className="form-item">
 				<input className="sTaskInput" type="number" placeholder="h" value={this.state.hours} onChange={this.handleHourChange}/>
 				:<input className="sTaskInput" type="number" placeholder="min" value={this.state.minutes} onChange={this.handleMinChange}/>
 				<ButtonGroup>
 					<Button className="completing-btns" bsStyle="success" onClick={this.handleComplete}/>
 					<Button className="completing-btns" bsStyle="danger" onClick={this.handleCancel} />
 				</ButtonGroup>
-			</form>
-			</td>) : null;
+			</form>) : null;
 		return(
-			<table className="StaticTask">
-				<tr>
-				<td className="taskInfo">
+			<div className="StaticTask">
+				<div className="taskInfo task-item">
 					<div className="taskInfo" style={{backgroundColor: label.color}} onClick={this.props.onClick}>
 						<div className="title">
 							{title}
@@ -134,14 +131,14 @@ class StaticTask extends Component{
 						</div>
 						{due_date}
 					</div>
-				</td>
-				{quickCompleteBtn}
-				{completeBtn}
-				{deleteBtn}
-				
-				{completeForm}
-				</tr>
-			</table>
+				</div>
+				<div className="buttons task-item">
+					{quickCompleteBtn}
+					{completeBtn}
+					{deleteBtn}
+					{completeForm}
+				</div>
+			</div>
 		)
 	}
 }

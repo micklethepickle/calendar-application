@@ -14,8 +14,8 @@ class Week extends Component{
 			const tasks = this.props.dayToTasks[day];
 			const workTime = this.props.dayToWork[day];
 			return(
-				<li>
-					<Day 
+					<div className="calendarObject">
+						<Day 
 						key={d.toString()} 
 						date={d} 
 						dayClicker={this.props.dayClicker} 
@@ -23,15 +23,15 @@ class Week extends Component{
 						tasks={tasks}
 						workTime={workTime}
 						label_ids={this.props.label_ids}/>
-				</li>
+					</div>
 			)
 		});
 
 		return(
 			<div className="Week">
-				<ul id="horizontal-week">
+				<div className="horizontal-week">
 					{listDays}
-				</ul>
+				</div>
 			</div>
 		)
 	}

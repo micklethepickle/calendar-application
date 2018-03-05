@@ -1,0 +1,12 @@
+.Home{
+	display: flex;
+	width: 100%;
+}
+
+.boardCell{
+
+}
+
+.calendarCell{
+	margin:2em;
+}

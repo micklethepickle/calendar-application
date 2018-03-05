@@ -3,6 +3,7 @@ import './stylesheets/ZoomedDay.css';
 import AddTask from './AddTask';
 import CloseButton from './../michels-library/CloseButton';
 import TaskItem from './TaskItem';
+import Img from 'react-image';
 
 class ZoomedDay extends Component{
 	constructor(props){
@@ -47,15 +48,15 @@ class ZoomedDay extends Component{
 				updateTasks={this.props.updateTasks}/>
 		)
 
-		const dateString = this.props.date.toString();
+		const dateString = this.props.date.toDateString();
 		return(
 			<div className="ZoomedDay">
 				{dateString}
 				<CloseButton onClick={this.props.remove} />
-				<button className="add-item-btn" onClick={this.addItem} />
-
 				{addTask}
 				{taskItems}
+				<Img className="add-item-btn" onClick={this.addItem} 
+				src="https://raw.githubusercontent.com/google/material-design-icons/master/content/2x_web/ic_add_box_black_48dp.png"/>
 
 			</div>
 		)

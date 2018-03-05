@@ -26,18 +26,18 @@ class Month extends Component{
 		);
 
 		const daysOfWeek = days.map((d) =>
-			<li>
+			<div className="calendarObject">
 				<someDay key={d}> <center>{d}</center> </someDay>
-			</li>
+			</div>
 		);
 		const month = months[this.props.date.getMonth()];
 		const year = this.props.date.getFullYear();
 		const fullMonth = month + " " + year;
 		return(
 			<div className="Month">
-				<ul>
+				<div className="daysOfweek">
 					{daysOfWeek}
-				</ul>
+				</div>
 				{listWeeks}
 			</div>
 		)

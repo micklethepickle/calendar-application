@@ -2,10 +2,9 @@
 }
 
 .calendarCell{
-	width: 75em;
+	width: 80%;
 }
 
 .boardCell{
 	padding-top:5em;
-	width: 27em;
 }

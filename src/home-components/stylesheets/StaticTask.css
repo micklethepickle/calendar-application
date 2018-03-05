@@ -1,8 +1,16 @@
 .StaticTask{
-	width: 18em;
+	display: inline-flex;
+
 }
 
+.buttons{
+	display: inline-flex;
+	justify-content: space-around;
+}
 
+.form-item{
+	align-self: center;
+}
 .buttonCell{
 	padding:0;
 	margin:0;
@@ -13,7 +21,7 @@
 	padding: 0;
 	margin:0;
 	background-color: green;
-	width: 3.5em;
+	width: 3em;
 	height:100%;
 }
 
@@ -21,7 +29,7 @@
 	padding: 0;
 	margin: 0;
 	background-color: yellow;
-	width:3.5em;
+	width: 3em;
 	height:100%;
 }
 
@@ -29,7 +37,7 @@
 	padding: 0;
 	margin: 0;
 	background-color: red;
-	width: 3.5em;
+	width: 3em;
 	height: 100%;
 }
 
@@ -38,13 +46,13 @@
 	font-size: 0.75em;
 }
 
-.completeForm{
-	width: 9em;
-}
-
 .sTaskInput{
 	width:2em;
 	font-size: 1em;
+}
+
+.completing-btns{
+	height: 2em;
 }
 
 input::-webkit-inner-spin-button {

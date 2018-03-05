@@ -125,7 +125,6 @@ class Calendar extends Component{
 
 				{zoomedDate}
 
-				<Center>
 				<Month 
 					date={this.state.curMonth} 
 					weeks={this.state.weeks} 
@@ -134,7 +133,6 @@ class Calendar extends Component{
 					dayToTasks={this.props.dayToTasks}
 					dayToWork={this.props.dayToWork}
 					label_ids={this.props.label_ids}/>
-				</Center>
 			</div>
 		)
 	}

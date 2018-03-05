@@ -4,6 +4,8 @@ import axios from 'axios';
 import { Button, ButtonGroup, Popover, OverlayTrigger } from 'react-bootstrap';
 import { BlockPicker , SketchPicker} from 'react-color';
 
+
+const colors = ['#ff1744', '#ff80ab', '#d500f9', '#651fff', '#536dfe', '#18ffff', '#76ff03', '#00e676', '#ffff00', '#ff9100']
 class AddingLabel extends Component{
 	constructor(props){
 		super(props);
@@ -45,6 +47,7 @@ class AddingLabel extends Component{
 	render(){
 		const blockPicker = <BlockPicker 
 								color={this.state.curColor}
+								colors={colors}
 								triangle="hide"
 								onChangeComplete={this.handleColorChange}
 								/>

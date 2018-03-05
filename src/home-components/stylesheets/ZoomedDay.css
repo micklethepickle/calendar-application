@@ -8,3 +8,11 @@
 	right: 0;
 	background-color: #f4f8ff;
 }
+
+.add-item-btn{
+	width: 3em;
+	height: 3em;
+	margin:0;
+	padding: 0;
+	cursor: pointer;
+}
