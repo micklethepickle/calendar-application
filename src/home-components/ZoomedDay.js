@@ -5,6 +5,8 @@ import CloseButton from './../michels-library/CloseButton';
 import TaskItem from './TaskItem';
 import Img from 'react-image';
 
+import {Button, Icon, Popup} from 'semantic-ui-react';
+
 class ZoomedDay extends Component{
 	constructor(props){
 		super(props);
@@ -55,8 +57,12 @@ class ZoomedDay extends Component{
 				<CloseButton onClick={this.props.remove} />
 				{addTask}
 				{taskItems}
-				<Img className="add-item-btn" onClick={this.addItem} 
-				src="https://raw.githubusercontent.com/google/material-design-icons/master/content/2x_web/ic_add_box_black_48dp.png"/>
+				<Popup on="click" trigger={<Button className="add-item-btn" icon="add" />} content={<AddTask 
+						date={this.props.date} 
+						remove={this.hanldeRemoveAddTask} 
+						username={this.props.username} 
+						labels={this.props.labels}
+						updateTasks={this.props.updateTasks}/>}/>
 
 			</div>
 		)

@@ -46,6 +46,7 @@ class Board extends Component{
 		}
 		const taskItems = tasks.map(t => 
 			<TaskItem 
+				className="boardItem"
 				task={t} 
 				label={this.props.label_ids[t.label]} 
 				labels={this.props.labels} 

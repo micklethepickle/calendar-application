@@ -1,6 +1,7 @@
 .Board{
-	display: block;
-	background-color: #a0c4ff;
+	display: flex;
+	flex-direction: column;
+	background-color: #e6e8ed;
 	margin-left: 2em;
+	padding: 1em;
 }
-

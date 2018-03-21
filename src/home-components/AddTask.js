@@ -4,6 +4,7 @@ import CloseButton from './../michels-library/CloseButton';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import axios from 'axios';
+import { Form, Input, TextArea, Button, Icon} from 'semantic-ui-react';
 
 const optionStyle={backgroundColor: "black"};
 const valueToColor={one : '#fcaf4b', two: '#4dfc4b'}
@@ -50,11 +51,19 @@ class AddTask extends Component{
   	}
 
   	handleHourChange(e){
-  		this.setState({hours: e.target.value})
+  		if(!isNaN(e.target.value)){
+  			this.setState({hours: e.target.value})
+  		}else{
+  			this.setState({hours: ''})
+  		}
   	}
 
   	handleMinChange(e){
-  		this.setState({minutes : e.target.value})
+  		if(!isNaN(e.target.value)){
+  			this.setState({minutes: e.target.value})
+  		}else{
+  			this.setState({minutes: ''})
+  		}
   	}
 
   	handleSubmit(){
@@ -76,12 +85,12 @@ class AddTask extends Component{
 
 	  		axios.post('http://34.217.32.176:8000/tasks', new_task).then( response => {
 	  			this.props.updateTasks();
+	  			alert("Added task!")
 	  		})
 	  		.catch( error =>{
 	  			console.log(error)
 	  		})
 
-	  		this.props.remove();
   		}
   	}
 
@@ -99,12 +108,11 @@ class AddTask extends Component{
 
 		return(
 			<div className="AddTask">
-				<CloseButton onClick={this.props.remove} />
 
-				<form className="taskForm">
+				<Form className="taskForm" size="large">
 					
-					<input className="titleInput" type="text" placeholder="Title" value={this.state.title} onChange={this.handleTitleChange} />
-					<textarea className="descInput" cols="40" rows="5" placeholder="Description" value={this.state.description} onChange={this.handleDescChange} />
+					<Input className="titleInput" type="text" placeholder="Title" value={this.state.title} onChange={this.handleTitleChange} />
+					<Form.Field control={TextArea} className="descInput" cols="40" rows="5" placeholder="Description" value={this.state.description} onChange={this.handleDescChange} />
 					<Select
 						placeholder="Label"
 						className="labelSelector"
@@ -114,29 +122,16 @@ class AddTask extends Component{
 				        optionRenderer={this.renderOptions}
 				        valueRenderer={this.renderValue}
 				        options={labels} />
-				    <table>
-					    <tr style={{width: "100%"}}>
-					    	<td colspan="4">Estimated Time</td>
-					    </tr>
-					    <tr>
-					    	<td>
-					    	Hours
-					    	</td>
-					    	<td>
-						    <input className="timeInput" type="number" placeholder="Hours" value={this.state.hours} onChange={this.handleHourChange}/>
-						    </td>
-						    <td>
-						    Minutes
-						    </td>
-						    <td>
-						    <input className="timeInput" type="number" placeholder="Minutes" value={this.state.minutes} onChange={this.handleMinChange}/>
-						    </td>
-						</tr>
-				    </table>
-				    <input type="button" value="Submit" onClick={this.handleSubmit}/>
+
+				    Estimated Time
+				    <Form.Group widths='equal' >
+				    	<Form.Field fluid control={Input} label="Hours" placeholder="Hours" value={this.state.hours} onChange={this.handleHourChange} />
+				    	<Form.Field fluid control={Input} label="Minutes" placeholder="Minutes" value={this.state.minutes} onChange={this.handleMinChange}/>
+				    </Form.Group>
+				    <Form.Button onClick={this.handleSubmit}> Submit </Form.Button>
 
 				    {errorMsg}
-				</form>
+				</Form>
 			</div>
 		)
 	}

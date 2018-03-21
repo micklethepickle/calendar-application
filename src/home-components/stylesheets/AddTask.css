@@ -1,12 +1,3 @@
-.AddTask{
-	position: fixed;
-	margin:auto;
-	height: 30em;
-	width: 30em;
-	left: 0;
-	right: 0;
-	background-color: rgba(66, 134, 244, 0.8);
-}
 
 .taskForm{
 	width: 25em;

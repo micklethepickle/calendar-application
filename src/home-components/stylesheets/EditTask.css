@@ -4,9 +4,8 @@
 
 .taskForm{
 	width: 20em;
-	margin-top:2.5em;
-	margin-right: 2.5em;
-	margin-left: 2.5em;
+	margin: 0;
+	padding: 0;
 }
 
 .titleInput{
@@ -34,4 +33,9 @@
 .datePicker{
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	background-color: white
+}
+
+.time-titles{
+	display: flex;
+	justify-content: space-between;
 }

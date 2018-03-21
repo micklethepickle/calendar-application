@@ -5,6 +5,7 @@ import Select from 'react-select';
 import DatePicker from 'react-date-picker';
 import 'react-select/dist/react-select.css';
 import axios from 'axios';
+import { Form, Input, TextArea, Button, Icon, Divider, Header} from 'semantic-ui-react';
 
 const optionStyle={backgroundColor: "black"};
 const valueToColor={one : '#fcaf4b', two: '#4dfc4b'}
@@ -59,20 +60,37 @@ class EditTask extends Component{
   		this.setState({description: e.target.value})
   	}
 
+  	
   	handleHourChange(e){
-  		this.setState({hours: e.target.value})
+  		if(!isNaN(e.target.value)){
+  			this.setState({hours: e.target.value})
+  		}else{
+  			this.setState({hours: ''})
+  		}
   	}
 
   	handleMinChange(e){
-  		this.setState({minutes : e.target.value})
+  		if(!isNaN(e.target.value)){
+  			this.setState({minutes: e.target.value})
+  		}else{
+  			this.setState({minutes: ''})
+  		}
   	}
 
   	handleActHourChange(e){
-  		this.setState({act_hours : e.target.value})
+  		if(!isNaN(e.target.value)){
+  			this.setState({act_hours: e.target.value})
+  		}else{
+  			this.setState({act_hours: ''})
+  		}
   	}
 
   	handleActMinChange(e){
-  		this.setState({act_minutes : e.target.value})
+  		if(!isNaN(e.target.value)){
+  			this.setState({act_minutes: e.target.value})
+  		}else{
+  			this.setState({act_minutes: ''})
+  		}
   	}
 
   	handleDDateChange(e){
@@ -100,11 +118,11 @@ class EditTask extends Component{
 
 	  		axios.put('http://34.217.32.176:8000/tasks/'+ id, new_task).then( response => {
 	  			this.props.updateTasks();
+	  			alert("Updated!")
 	  		})
 	  		.catch( error =>{
 	  			console.log(error)
 	  		})
-	  		this.props.remove();
   		}
   	}
 
@@ -120,12 +138,11 @@ class EditTask extends Component{
 
 		return(
 			<div className="EditTask">
-				<CloseButton onClick={this.props.remove} />
 
-				<form className="taskForm">
+				<Form className="taskForm" size="large">
 					
-					<input className="titleInput" type="text" placeholder="Title" value={this.state.title} onChange={this.handleTitleChange} />
-					<textarea className="descInput" cols="40" rows="5" placeholder="Description" value={this.state.description} onChange={this.handleDescChange} />
+					<Input className="titleInput" type="text" placeholder="Title" value={this.state.title} onChange={this.handleTitleChange} />
+					<Form.Field control={TextArea} className="descInput" cols="40" rows="5" placeholder="Description" value={this.state.description} onChange={this.handleDescChange} />
 					<Select
 						className="labelSelector"
 				        name="form-field-name"
@@ -134,52 +151,30 @@ class EditTask extends Component{
 				        optionRenderer={this.renderOptions}
 				        valueRenderer={this.renderValue}
 				        options={labels} />
-					<table>
-					    <tr>
-					    	<td colspan="4">Estimated Time</td>
-					    </tr>
-					    <tr>
-					    	<td>
-					    	Hours
-					    	</td>
-					    	<td>
-						    <input className="timeInput" type="number" placeholder="Hours" value={this.state.hours} onChange={this.handleHourChange}/>
-						    </td>
-						    <td>
-						    Minutes
-						    </td>
-						    <td>
-						    <input className="timeInput" type="number" placeholder="Minutes" value={this.state.minutes} onChange={this.handleMinChange}/>
-						    </td>
-						</tr>
-				    </table>
-				    <table>
-					    <tr>
-					    	<td colspan="4">Actual Time</td>
-					    </tr>
-					    <tr>
-					    	<td>
-					    	Hours
-					    	</td>
-					    	<td>
-						    <input className="timeInput" type="number" placeholder="Hours" value={this.state.act_hours} onChange={this.handleActHourChange}/>
-						    </td>
-						    <td>
-						    Minutes
-						    </td>
-						    <td>
-						    <input className="timeInput" type="number" placeholder="Minutes" value={this.state.act_minutes} onChange={this.handleActMinChange}/>
-						    </td>
-						</tr>
-				    </table>
+				    <Divider horizontal/>
+				    
+				    <div className="time-titles">
+				    	<div className="est-time">
+				    		Estimated Time
+				    	</div>
+				    	<div className="act-time">
+				    		Actual Time
+				    	</div>
+				    </div>
+				    <Form.Group widths='equal' >
+				    	<Form.Field fluid control={Input} label="Hours" placeholder="Hours" value={this.state.hours} onChange={this.handleHourChange} />
+				    	<Form.Field fluid control={Input} label="Minutes" placeholder="Minutes" value={this.state.minutes} onChange={this.handleMinChange}/>
+				    	<Form.Field fluid control={Input} label="Hours" placeholder="Hours" value={this.state.act_hours} onChange={this.handleActHourChange} />
+				    	<Form.Field fluid control={Input} label="Minutes" placeholder="Minutes" value={this.state.act_minutes} onChange={this.handleActMinChange}/>
+				    </Form.Group>
+				</Form>
 				    <DatePicker
 				    	className="datePicker"
 				    	onChange={this.handleDDateChange}
 				    	value={this.state.due_date}
 				    />
-				    <input type="button" value="Submit" onClick={this.handleSubmit}/>
+				    <Button onClick={this.handleSubmit}> Submit </Button>
 				    {errorMsg}
-				</form>
 			</div>
 		)
 	}

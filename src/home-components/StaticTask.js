@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
 import './stylesheets/StaticTask.css';
 import axios from 'axios';
-import { Button, ButtonGroup} from 'react-bootstrap';
+import EditTask from './EditTask';
+
+import { Popup, Button, Input, Icon, Card} from 'semantic-ui-react';
 
 class StaticTask extends Component{
 	constructor(props){
 		super(props);
 
-		this.state = {isCompleting : false, hours: null, minutes: null}
+		this.state = { 
+			hours: Math.floor(this.props.task.actual_times.last() / 60),
+			minutes: this.props.task.actual_times.last() % 60
+		}
 
 		this.handleHourChange = this.handleHourChange.bind(this);
 		this.handleMinChange = this.handleMinChange.bind(this);
 
 		this.quickComplete = this.quickComplete.bind(this);
-		this.complete = this.complete.bind(this);
 		this.handleComplete = this.handleComplete.bind(this);
 		this.delete = this.delete.bind(this);
-		this.handleCancel = this.handleCancel.bind(this);
 	}
 
 	handleHourChange(e){
@@ -40,16 +43,6 @@ class StaticTask extends Component{
 	  		.catch( error =>{
 	  			console.log(error)
 	  		})
-	  	this.setState({isCompleting: false})
-	}
-
-	complete(){
-		this.setState({isCompleting: true})
-
-	}
-
-	handleCancel(){
-		this.setState({isCompleting: false})
 	}
 
 	handleComplete(){
@@ -89,7 +82,6 @@ class StaticTask extends Component{
 			console.log(error)
 		})
 	}
-
 	render(){
 		const title = this.props.task.title;
 		const description = this.props.task.description;
@@ -102,24 +94,15 @@ class StaticTask extends Component{
 			due_date = <div className="dueDate">{dateString} </div>
 		} 
 
-		const quickCompleteBtn = this.state.isCompleting ? null : <div className="buttonCell"><button className="quickComplete" onClick={this.quickComplete} /></div>;
-		const completeBtn = this.state.isCompleting ? null :  <div className="buttonCell"><button className="complete" onClick={this.complete} /></div>;
-		const deleteBtn = this.state.isCompleting ? null :  <div className="buttonCell"><button className="delete" onClick={this.delete} /></div>;
-
-		const completeForm = this.state.isCompleting? 
-			(
+		const completeForm = 
 			<form className="form-item">
 				<input className="sTaskInput" type="number" placeholder="h" value={this.state.hours} onChange={this.handleHourChange}/>
 				:<input className="sTaskInput" type="number" placeholder="min" value={this.state.minutes} onChange={this.handleMinChange}/>
-				<ButtonGroup>
-					<Button className="completing-btns" bsStyle="success" onClick={this.handleComplete}/>
-					<Button className="completing-btns" bsStyle="danger" onClick={this.handleCancel} />
-				</ButtonGroup>
-			</form>) : null;
-		return(
-			<div className="StaticTask">
-				<div className="taskInfo task-item">
-					<div className="taskInfo" style={{backgroundColor: label.color}} onClick={this.props.onClick}>
+				<Button icon="checkmark" onClick={this.handleComplete}/>
+			</form>
+
+		const popupTrigger = <div className="taskInfo task-item">
+					<div className="taskInfo">
 						<div className="title">
 							{title}
 						</div>
@@ -132,12 +115,31 @@ class StaticTask extends Component{
 						{due_date}
 					</div>
 				</div>
+
+		return(
+			<div className="StaticTask">
+				<Card fluid >
+				<Popup trigger={popupTrigger} on="click" content={<EditTask
+							task={this.props.task} 
+							remove={this.handleRemove} 
+							labels={this.props.labels}
+							label={this.props.label}
+							updateTasks={this.props.updateTasks}
+							onRemove={this.closePopup}/>}/>
+
+				<div className="color" style={{backgroundColor: label.color}} />
 				<div className="buttons task-item">
-					{quickCompleteBtn}
-					{completeBtn}
-					{deleteBtn}
-					{completeForm}
+					<Button.Group fluid>
+						<Button basic color="green" icon onClick={this.quickComplete} >
+							<Icon name="flag checkered" size="big" color="green"/>
+						</Button>
+						<Popup trigger={<Button basic color="yellow" className="complete" icon ><Icon name="clock" size="big" color="yellow" /></Button>} content={completeForm} on='click' />
+						<Button basic color="red" icon onClick={this.delete}  >
+							<Icon name="delete calendar" size="big" color="red"/>
+						</Button>
+					</Button.Group>
 				</div>
+				</Card>
 			</div>
 		)
 	}
