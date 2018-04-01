@@ -118,7 +118,7 @@ class EditTask extends Component{
 
 	  		axios.put('http://34.217.32.176:8000/tasks/'+ id, new_task).then( response => {
 	  			this.props.updateTasks();
-	  			alert("Updated!")
+	  			this.props.onRemove();
 	  		})
 	  		.catch( error =>{
 	  			console.log(error)

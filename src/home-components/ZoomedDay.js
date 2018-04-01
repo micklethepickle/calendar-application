@@ -3,7 +3,6 @@ import './stylesheets/ZoomedDay.css';
 import AddTask from './AddTask';
 import CloseButton from './../michels-library/CloseButton';
 import TaskItem from './TaskItem';
-import Img from 'react-image';
 
 import {Button, Icon, Popup} from 'semantic-ui-react';
 
@@ -29,17 +28,6 @@ class ZoomedDay extends Component{
 		//log test
 
 
-		var addTask = null
-		if (this.state.addingItem == true){
-			addTask = <AddTask 
-						date={this.props.date} 
-						remove={this.hanldeRemoveAddTask} 
-						username={this.props.username} 
-						labels={this.props.labels}
-						updateTasks={this.props.updateTasks}/>
-		}
-
-
 		//Task components
 		const taskItems = this.props.tasks.map(t => 
 			<TaskItem 
@@ -55,9 +43,8 @@ class ZoomedDay extends Component{
 			<div className="ZoomedDay">
 				{dateString}
 				<CloseButton onClick={this.props.remove} />
-				{addTask}
 				{taskItems}
-				<Popup on="click" trigger={<Button className="add-item-btn" icon="add" />} content={<AddTask 
+				<Popup on="click" open={this.state.addingItem} onOpen={this.addItem} onClose={this.hanldeRemoveAddTask} trigger={<Button className="add-item-btn" icon="add" />} content={<AddTask 
 						date={this.props.date} 
 						remove={this.hanldeRemoveAddTask} 
 						username={this.props.username} 

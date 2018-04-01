@@ -85,7 +85,7 @@ class AddTask extends Component{
 
 	  		axios.post('http://34.217.32.176:8000/tasks', new_task).then( response => {
 	  			this.props.updateTasks();
-	  			alert("Added task!")
+	  			this.props.remove();
 	  		})
 	  		.catch( error =>{
 	  			console.log(error)

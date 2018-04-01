@@ -1,0 +1,5 @@
+.tasks{
+	width: 67em;
+	display: flex;
+	flex-wrap: wrap;
+}

@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import './stylesheets/StaticTask.css';
 import axios from 'axios';
 import EditTask from './EditTask';
+import TaskProgressBar from './TaskProgressBar';
 
-import { Popup, Button, Input, Icon, Card} from 'semantic-ui-react';
+import { Popup, Button, Input, Icon, Card, Progress} from 'semantic-ui-react';
 
 class StaticTask extends Component{
 	constructor(props){
@@ -11,7 +12,8 @@ class StaticTask extends Component{
 
 		this.state = { 
 			hours: Math.floor(this.props.task.actual_times.last() / 60),
-			minutes: this.props.task.actual_times.last() % 60
+			minutes: this.props.task.actual_times.last() % 60,
+			editing: false
 		}
 
 		this.handleHourChange = this.handleHourChange.bind(this);
@@ -20,6 +22,9 @@ class StaticTask extends Component{
 		this.quickComplete = this.quickComplete.bind(this);
 		this.handleComplete = this.handleComplete.bind(this);
 		this.delete = this.delete.bind(this);
+
+		this.handleOpenEdit = this.handleOpenEdit.bind(this);
+		this.handleCloseEdit = this.handleCloseEdit.bind(this);
 	}
 
 	handleHourChange(e){
@@ -51,10 +56,6 @@ class StaticTask extends Component{
 		var hours = this.state.hours;
 		var minutes = this.state.minutes;
 
-		if(this.state.hours == null && this.state.minutes == null){
-			hours = Math.floor(this.props.task.estimated_time /60);
-			minutes = this.props.task.estimated_time % 60;
-		}
 		const body = {
 			act_hours: hours,
 			act_mins: minutes,
@@ -62,6 +63,7 @@ class StaticTask extends Component{
 		}
 		axios.put('http://34.217.32.176:8000/tasks/complete/'+ id, body).then( response => {
 	  			this.props.updateTasks();
+	  			console.log("updated")
 	  		})
 	  		.catch( error =>{
 	  			console.log(error)
@@ -81,6 +83,14 @@ class StaticTask extends Component{
 		.catch(error =>{
 			console.log(error)
 		})
+	}
+
+	handleCloseEdit(){
+		this.setState({editing: false})
+	}
+
+	handleOpenEdit(){
+		this.setState({editing: true})
 	}
 	render(){
 		const title = this.props.task.title;
@@ -106,11 +116,8 @@ class StaticTask extends Component{
 						<div className="title">
 							{title}
 						</div>
-						<div className="desc">
-							{description}
-						</div>
 						<div className="timeLeft">
-							{this.props.task.estimated_time} minutes
+							{this.props.task.actual_times.last()} / {this.props.task.estimated_time} minutes
 						</div>
 						{due_date}
 					</div>
@@ -119,13 +126,14 @@ class StaticTask extends Component{
 		return(
 			<div className="StaticTask">
 				<Card fluid >
-				<Popup trigger={popupTrigger} on="click" content={<EditTask
+				<TaskProgressBar percent={(this.props.task.actual_times.last() / this.props.task.estimated_time) * 100}/>
+				<Popup trigger={popupTrigger} on="click" onOpen={this.handleOpenEdit} onClose={this.handleCloseEdit} open={this.state.editing} content={<EditTask
 							task={this.props.task} 
 							remove={this.handleRemove} 
 							labels={this.props.labels}
 							label={this.props.label}
 							updateTasks={this.props.updateTasks}
-							onRemove={this.closePopup}/>}/>
+							onRemove={this.handleCloseEdit}/>}/>
 
 				<div className="color" style={{backgroundColor: label.color}} />
 				<div className="buttons task-item">
